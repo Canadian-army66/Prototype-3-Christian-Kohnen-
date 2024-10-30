@@ -25,6 +25,8 @@ public class PlayerControllerX : MonoBehaviour
         playerAudio = GetComponent<AudioSource>();
 
         // Apply a small upward force at the start of the game
+        playerRb = GetComponent<Rigidbody>();
+
         playerRb.AddForce(Vector3.up * 5, ForceMode.Impulse);
 
     }
@@ -33,9 +35,13 @@ public class PlayerControllerX : MonoBehaviour
     void Update()
     {
         // While space is pressed and player is low enough, float up
-        if (Input.GetKey(KeyCode.Space) && !gameOver)
+        if (Input.GetKey(KeyCode.Space) && !gameOver && transform.position.y < 15)
         {
-            playerRb.AddForce(Vector3.up * floatForce);
+            playerRb.AddForce(floatForce * Vector3.up);
+        }
+        if (transform.position.y > 15)
+        {
+            playerRb.velocity = Vector3.zero;
         }
     }
 
